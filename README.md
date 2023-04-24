@@ -363,3 +363,180 @@ int main()
 	ListDelete(L,i,e);
 	return 0;
 }
+#include <stdio.h>
+#include <stdlib.h>
+typedef struct LNode
+{
+	int data;
+	struct LNode* next;
+}LNode,*Linklist;
+bool Initlist(Linklist &L)
+{
+	L = (LNode*)malloc(sizeof(LNode));
+	if(L == NULL)
+		return false;
+	L->next = NULL;
+	return true;
+}
+//单链表的删除
+//按位序删除（带头结点）
+bool ListDelete(Linklist &L,int i,int &e)
+{
+	if(i<1)
+		return false;
+	LNode* p;
+	int j = 0;
+	p = L;
+	while(p != NULL && j<i-1)
+	{
+		p = p->next;
+		j++;
+	}
+	if(p == NULL)
+		return false;
+	if(p->next == NULL)
+		return false;
+	LNode* q = p->next;
+	e = q->data;
+	p->next = q->next;
+	free(q);
+	return true;
+}
+//按位序删除（不带头结点）
+bool ListDelete(Linklist &L,int i,int &e)
+{
+	if(i<1)
+		return false;
+	if(i == 1)
+	{
+		LNode* s = L;
+		e = s->data;
+		L = s->next;
+		free(s);
+		return true;
+	}
+	LNode* p;
+	int j = 1;
+	p = L;
+	while(p != NULL && j<i-1)
+	{
+		p = p->next;
+		j++;
+	}
+	if(p == NULL)
+		return false;
+	if(p->next == NULL)
+		return false;
+	LNode* q = p->next;
+	e = q->data;
+	p->next = q->next;
+	free(q);
+	return true;
+}
+//删除指定结点（带头结点）
+bool DeleteNode(LNode* p)
+{
+	if(p == NULL)
+		return false;
+	LNode* q = p->next;
+	p->data = p->next->data;
+	p->next = q->next;
+	free(q);
+	return true;
+}
+//如果删除的为最后一个元素，则要从头遍历
+//按位查找
+bool GetElem(Linklist L,int i)
+{
+	if(i<1)
+		return false;
+	LNode* p;
+	int j = 0;
+	p = L;
+	while(p != NULL && j<i)
+	{
+		p = p->next;
+		j++;
+	}
+	return p;
+}
+//按值查找
+bool LocateElem(Linklist L,int e)
+{
+	LNode* p = L->next;
+	while(p != NULL && p->data != e)
+		p = p->next;
+	return p;
+}
+//求表的长度(带头结点）
+int length(Linklist L)
+{
+	int len = 0;
+	LNode* p = L;//不带头结点时,设int len = 1;
+	while(p->next != NULL)
+	{
+		p = p->next;
+		len++;
+	}
+	return len;
+}
+//单链表的建立（尾插法）（带头结点）
+Linklist List_TailInsert(Linklist &L)//正向建立单链表
+{
+	int x = 0;
+	L = (LNode*)malloc(sizeof(LNode));//建立头结点；
+	LNode* s,*r = L;
+	scanf("%d",&x);
+	while(x != 9999)
+	{
+	    s = (LNode*)malloc(sizeof(LNode));
+		s->data = x;
+		r->next = s;
+		r = s;
+		scanf("%d",&x);
+	}
+	r->next = NULL;
+	return L;
+}
+//单链表的头插法（带头结点）
+Linklist List_HeadInsert(Linklist &L)//逆向建立单链表
+{
+	LNode* s;
+	int x;
+	L = (LNode*)malloc(sizeof(LNode));
+	L->next = NULL;
+	scanf("%d",&x);
+	while(x != 9999)
+	{
+		s = (LNode*)malloc(sizeof(LNode));
+		s->data = x;
+		s->next = L->next;
+		L->next = s;
+		scanf("%d",&x);
+	}
+	return L;
+}
+Linklist List_HeadInsert(Linklist &L)
+{
+	LNode* s;
+	int x;
+	L = NULL;
+	scanf("%d",&x);
+	while(x != 9999)
+	{
+		s = (LNode*)malloc(sizeof(LNode));
+		s->data = x;
+		s->next = L;
+		L = s;
+		scanf("%d",&x);
+	}
+	return L;
+}
+int main()
+{
+	Linklist L;
+	Initlist(L);
+	ListDelete(&L,i,&e);
+	DeleteNode(p);
+	return 0;
+}
